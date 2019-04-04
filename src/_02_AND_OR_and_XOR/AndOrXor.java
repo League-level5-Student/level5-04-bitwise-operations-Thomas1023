@@ -10,6 +10,7 @@ public class AndOrXor {
 		int num = 5 & 9;
 		System.out.println(num); // This prints 1
 		
+		
 		// 5     = 0 1 0 1
 		// 9     = 1 0 0 1
 		// 5 & 9 = 0 0 0 1  <--since the one column is the only column that both have a 1, the result is just 1.

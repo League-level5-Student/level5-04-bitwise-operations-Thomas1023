@@ -5,7 +5,10 @@ public class Decimal_To_Binary {
 		//Converting a decimal number to binary is a little trickier.
 		
 		//EXAMPLE: Convert 43 to binary
-		
+		int i=0;
+		while(i!=0) {
+			
+		}
 		/*
 		 * Step 1: Start with one and add a digit the left that is double the value of the previous number.
 		 *         Stop when you've passed the target number        
