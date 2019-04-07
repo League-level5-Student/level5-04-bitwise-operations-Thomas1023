@@ -46,7 +46,7 @@ public class Base64DecoderTester {
 		// 0000.0111 0000.1101. 0111.1110
 		assertArrayEquals(answer, check);
 	}
-//@Test
+@Test
 	public void testBase64StringToByteArray() {
 		String file = "";
 		try {

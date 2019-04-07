@@ -1,7 +1,9 @@
 package _04_Base64_Decoder;
 
+import java.awt.List;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Base64;
 
 public class Base64Decoder {
@@ -56,35 +58,42 @@ public class Base64Decoder {
 	public static byte[] convert4CharsTo24Bits(String s){
 		char[] ch;
 		byte[] raw = { 0, 0, 0, 0};
-		byte[] ret = { 0, 0, 0 };
+		
 		
 		ch=s.toCharArray();
 		
 		for (int i = 0; i < ch.length; i++) {
 			raw[i]=convertBase64Char(ch[i]);
 		}
-		String rawString="";
-		for (byte b : raw) {
-			String temp = String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0').substring(2);
-			
-			rawString+=temp;
-		}
-		ret[1]=Byte.parseByte(rawString.substring(0, 8));
-		ret[2]=Byte.parseByte(rawString.substring(8, 16));
-		ret[3]=Byte.parseByte(rawString.substring(16, 24));
-		System.err.println(rawString.substring(0, 8));
-		return ret;
+		 byte[] cooked =new byte[3];
+		 cooked[0]=(byte) ((raw[0]<<2) | (raw[1]>>4));
+		 cooked[1]=(byte) ((raw[1]<<4) | (raw[2]>>2));
+		 cooked[2]=(byte) ((raw[2]<<6) | (raw[3]));
+
+		System.err.println("\n1:"+cooked[0]+"\n2:"+cooked[1]+"\n3:"+cooked[2]);
+		return cooked;
 	}
 	
 	//3. Complete this method so that it takes in a string of any length
 	//   and returns the full byte array of the decoded base64 characters.
 	public static byte[] base64StringToByteArray(String file) {
+		 ArrayList<Byte> cook = new ArrayList<Byte>();
 		int last=0;
-		for (int i = 0; i < file.length(); i++) {
-			if(last+4<file.length()) {
-			convert4CharsTo24Bits(file.substring(last, last+4));
+		byte[] temp =new byte[3];
+		
+		for (int i = 0; i < file.length(); i+=4) {
+			temp=convert4CharsTo24Bits(file.substring(i, i+4));
+			for (byte b : temp) {
+				cook.add(b);
+				
 			}
+			last+=4;
 		}
-		return null;
+		byte[] fin =new byte[cook.size()];
+		for (int i = 0; i < fin.length; i++) {
+			fin[i]=cook.get(i);
+		}
+		
+		return fin;
 	}
 }
